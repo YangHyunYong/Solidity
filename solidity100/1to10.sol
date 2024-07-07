@@ -5,25 +5,24 @@ contract Q1{
     /*
     더하기, 빼기, 곱하기, 나누기 그리고 제곱을 반환받는 계산기를 만드세요.
     */
-    uint public result;
-    function add(uint _n) public{
-        result += _n;
+    function add(uint _a, uint _b) public pure returns(uint){
+        return _a+_b;
     }
     
-    function sub(uint _n) public{
-        result -= _n;
+    function sub(uint _a, uint _b) public pure returns(uint){
+        return _a-_b;
     }
 
-    function mul(uint _n) public{
-        result *= _n;
+    function mul(uint _a, uint _b) public pure returns(uint){
+        return _a*_b;
     }
 
-    function div(uint _n) public{
-        result /= _n;
+    function div(uint _a, uint _b) public pure returns(uint){
+        return _a/_b;
     }
 
-    function pow(uint _n) public{
-        result = result ** _n;
+    function pow(uint _a, uint _b) public pure returns(uint){
+        return _a**_b;
     }
 }
 
