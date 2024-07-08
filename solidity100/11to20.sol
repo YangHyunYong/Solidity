@@ -8,8 +8,9 @@ contract Q11{
     uint[] array;
     
     function checkEven(uint _n) public{
-        require(_n%2==0,"Input must be Even number");
-        array.push(_n);
+        if(_n%2==0) {
+            array.push(_n);
+        }
     }
 }
 
@@ -59,10 +60,9 @@ contract Q14{
     }
 
     Student[] students;
-    uint idx=1;
 
     function addStudent(string memory _name, string[] memory _lectures) public {
-        students.push(Student(idx++,_name,_lectures));
+        students.push(Student(students.length+1, _name, _lectures));
     }
 }
 
@@ -90,7 +90,7 @@ contract Q15{
         A=temp;
     }
 
-    //함수를 짤 때, 상태변수를 계속 변경 vs 지역변수로 변경하고 결과를 상태변수에 반영 -> 가스비 차이가 저렇게 나는데 후자로 짜는게 좋은건가?
+    //함수를 짤 때, 상태변수를 계속 변경 vs 지역변수로 변경하고 결과를 상태변수에 반영 -> 가스비 차이가 저렇게 나니까 후자로 짜는게 좋은건가?
 }
 
 contract Q16{
@@ -167,7 +167,7 @@ contract Q20{
 
         if(arr.length==15){
             for(uint i=3;i<arr.length;i+=3){
-                arr[i]=0;
+                delete arr[i];
             }
         }
     }
