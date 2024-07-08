@@ -34,8 +34,10 @@ contract TEST1 {
     mapping(uint => Student) mapNumberToStudent;
     mapping(string => Student) mapNameToStudent;
 
-    //학생 추가 기능
     function addStudent(string memory _name, uint _number, uint _score) public {
+        /*
+        학생 추가 기능
+        */
         string memory _grade;
         string[] memory _lectures;
         uint idx = students.length + 1;
@@ -52,33 +54,49 @@ contract TEST1 {
         mapNameToStudent[_name] = student;
     }
 
-    // 학생 조회 기능(1) - 특정 학생의 번호를 입력하면 그 학생 전체 정보를 반환
     function getStudentByNumber(uint _number) public view returns(Student memory){
+        /*
+        학생 조회 기능(1) - 특정 학생의 번호를 입력하면 그 학생 전체 정보를 반환
+        */
         return mapNumberToStudent[_number];
     }
 
-    // 학생 조회 기능(2) - 특정 학생의 이름을 입력하면 그 학생 전체 정보를 반환
     function getStudentByName(string memory _name) public view returns(Student memory){
+        /*
+        학생 조회 기능(2) - 특정 학생의 이름을 입력하면 그 학생 전체 정보를 반환
+        */
         return mapNameToStudent[_name];
     }
 
-    // 학생 점수 조회 기능 - 특정 학생의 이름을 입력하면 그 학생의 점수를 반환
+    
     function getStudentScore(string memory _name) public view returns(uint){
+        /*
+        학생 점수 조회 기능 - 특정 학생의 이름을 입력하면 그 학생의 점수를 반환
+        */
         return mapNameToStudent[_name].score;
     }
 
-    // 학생 전체 숫자 조회 기능 - 현재 등록된 학생들의 숫자를 반환
+    
     function getStduentCount() public view returns(uint){
+        /*
+        학생 전체 숫자 조회 기능 - 현재 등록된 학생들의 숫자를 반환
+        */
         return students.length;
     }
 
-    // 학생 전체 정보 조회 기능 - 현재 등록된 모든 학생들의 정보를 반환
+    
     function getAllStudents() public view returns(Student[] memory){
+        /*
+        학생 전체 정보 조회 기능 - 현재 등록된 모든 학생들의 정보를 반환
+        */
         return students;
     }
 
-    // 학생들의 전체 평균 점수 계산 기능 - 학생들의 전체 평균 점수를 반환
+    
     function getStudentsAvg() public view returns(uint){
+        /*
+        학생들의 전체 평균 점수 계산 기능 - 학생들의 전체 평균 점수를 반환
+        */
         uint sum;
         for(uint i=0;i<students.length;i++){
             sum+=students[i].score;
@@ -86,15 +104,22 @@ contract TEST1 {
         return sum/students.length;
     }
 
-    // 선생 지도 자격 자가 평가 시스템 - 학생들의 평균 점수가 70점 이상이면 true, 아니면 false를 반환
-    function isOk() public view returns(bool){
+    
+    function getTeacherAbility() public view returns(bool){
+        /*
+        선생 지도 자격 자가 평가 시스템 - 학생들의 평균 점수가 70점 이상이면 true, 아니면 false를 반환
+        */
         uint avg = getStudentsAvg();
+        
         if(avg>=70) return true;
         else return false;
     }
 
-    // 보충반 조회 기능 - F 학점을 받은 학생들의 숫자와 그 전체 정보를 반환  
+    
     function getFclass() public view returns(uint, Student[] memory){
+        /*
+        보충반 조회 기능 - F 학점을 받은 학생들의 숫자와 그 전체 정보를 반환
+        */
         uint cntF;
         for(uint i=0;i<students.length;i++){
             if(keccak256(abi.encodePacked(students[i].grade)) == keccak256(abi.encodePacked("F"))){
@@ -113,32 +138,39 @@ contract TEST1 {
         return (cntF, temp);
     }
 
-    // // S반 조회 기능 - 가장 점수가 높은 학생 4명을 S반으로 설정하는데, 
-    // // 이 학생들의 전체 정보를 반환하는 기능 (S반은 4명으로 한정)
-    // function getSclass() public view returns(Student[] memory){
-    //     //4까지 push, 제일 작은 idx 저장
-    //     //제일 작은 idx student와 비교, 크면 갱신, for문 돌려서 idx 갱신
-    //     Student[] memory temp = new Student[](4);
-    //     uint idx;
-    //     uint score=101;
-    //     for(uint i=0;i<students.length;i++){
-    //         if(i<4){
-    //             temp[i]=students[i];
-    //             if(score>students[i].score){
-    //                 score=students[i].score;
-    //                 idx=i;
-    //             }
-    //         }
-    //         else{
-    //             Student memory s = temp[idx];
-    //             if(s.score<students[i].score){
-    //                 temp[idx]=students[i];
+    
+    function getSclass() public view returns(Student[] memory){
+        /*
+        S반 조회 기능 - 가장 점수가 높은 학생 4명을 S반으로 설정하는데, 
+        이 학생들의 전체 정보를 반환하는 기능 (S반은 4명으로 한정)
+        */
+        Student[] memory temp = new Student[](4);
+        uint idx;
+        uint score=101;
+        for(uint i=0;i<students.length;i++){
+            if(i<4){
+                temp[i]=students[i];
+                if(score>students[i].score){
+                    score=students[i].score;
+                    idx=i;
+                }
+            }
+            else{
+                Student memory s = temp[idx];
+                if(s.score<students[i].score){
+                    temp[idx]=students[i];
 
-    //                 for(uint i=0;i<4;i++){
-                        
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+                    score=101;
+                    for(uint j=0;j<4;j++){
+                        if(score>temp[j].score){
+                            score=temp[j].score;
+                            idx=j;
+                        }
+                    }
+                }
+            }
+        }
+
+        return temp;
+    }
 }
