@@ -23,11 +23,11 @@ contract Test2{
     Student[] students;
     mapping(uint=>Student) mapNumbertoStudent;
 
-    // function setStudent(uint _number, string memory _name, uint _score) public{
-    //     Student memory student=Student(_number,_name,_score);
-    //     students.push(student);
-    //     mapNumbertoStudent[_number]=student;
-    // }
+    function setStudent(uint _number, string memory _name, uint _score) public{
+        Student memory student=Student(_number,_name,_score);
+        students.push(student);
+        mapNumbertoStudent[_number]=student;
+    }
 
     function getLowest() public view returns(Student memory){
         /*
@@ -64,6 +64,7 @@ contract Test2{
         /*
         총 점수 평균
         */
+        require(students.length!=0,"students is empty");
         return getScoreSum()/students.length;
     }
 
