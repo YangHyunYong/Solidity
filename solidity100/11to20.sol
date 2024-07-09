@@ -166,7 +166,7 @@ contract Q20{
         arr.push(_n);
 
         if(arr.length==15){
-            for(uint i=3;i<arr.length;i+=3){
+            for(uint i=2;i<arr.length;i+=3){
                 delete arr[i];
             }
         }
