@@ -24,7 +24,7 @@ contract TEST1 {
     */
     struct Student{
         string name;
-        uint numebr;
+        uint numeber;
         uint score;
         string grade;
         string[] lectures;
@@ -134,7 +134,7 @@ contract TEST1 {
                 temp[idx++]=students[i];
             }
         }
-
+        
         return (cntF, temp);
     }
 
@@ -172,5 +172,23 @@ contract TEST1 {
         }
 
         return temp;
+    }
+
+    function sClass() public view returns(Student[] memory){
+        Student[] memory _students = students;
+        for(uint i=0;i<students.length;i++){
+            for(uint j=i+1;j<students.length;j++){
+                if(_students[i].score < _students[j].score){
+                    (_students[j],_students[i]) = (_students[i],_students[j]);
+                }
+            }
+        }
+
+        Student[] memory _s = new Student[](4);
+        for(uint i=0;i<4;i++){
+            _s[i]=_students[i];
+        }
+
+        return _s;
     }
 }
