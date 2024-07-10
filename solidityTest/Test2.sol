@@ -36,7 +36,7 @@ contract Test2{
         require(students.length!=0,"students is empty");
         if(students.length==1) return students[0];
         else{
-            Student memory lowest;
+            Student memory lowest=students[0];
             uint score=students[0].score;
             
             for(uint i=1;i<students.length;i++){
