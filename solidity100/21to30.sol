@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
-import "@openzeppelin/contracts/utils/Arrays.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
-
 contract Q21{
     /*
     3의 배수만 들어갈 수 있는 array를 구현하세요.
@@ -132,9 +129,9 @@ contract Q30{
     function sort(uint[] memory _numbers) public pure returns (uint[] memory){
         uint len=_numbers.length;
         for(uint i=0;i<len-1;i++){
-            for(uint j=0;j<len-i-1;j++){
-                if(_numbers[j]<_numbers[j+1]){
-                    (_numbers[j],_numbers[j+1]) = (_numbers[j+1],_numbers[j]);
+            for(uint j=i+1;j<len;j++){
+                if(_numbers[i]<_numbers[j]){
+                    (_numbers[i],_numbers[j]) = (_numbers[j],_numbers[i]);
                 }
             }
         }
