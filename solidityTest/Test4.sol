@@ -50,14 +50,6 @@ contract Test4 {
         owner=payable(msg.sender);
     }
 
-    function get() public view returns (User memory){
-        return map[msg.sender];
-    }
-
-    function getUserss() public view returns (User[] memory){
-        return users;
-    }
-    
     function participate() public payable {
         /*
         게임 참가시 참가비 제출 기능 - 참가시 0.01eth 지불 (돈은 smart contract가 보관)
@@ -87,11 +79,11 @@ contract Test4 {
         map[msg.sender] = user;
     }
 
-    function getUsers() public view returns (User[] memory){
+    function getUsers() public view returns (User memory){
         /*
         유저 조회 기능 - 유저의 전체정보 번호, 이름, 주소, 점수를 반환
         */
-        return users;
+        return map[msg.sender];
     }
 
     function transScoreToEther() public {
