@@ -5,6 +5,13 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract Test5 {
     function transTime(uint _n) public pure returns(string memory){
+        /*
+        숫자를 시분초로 변환하세요.
+        예) 100 -> 1 min 40 sec
+        600 -> 10 min 
+        1000 -> 1 6min 40 sec
+        5250 -> 1 hour 27 min 30 sec
+        */
         uint sec = _n%60;
         uint min = (_n/60) % 60;
         uint hour = _n/(60*60);
