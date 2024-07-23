@@ -62,6 +62,7 @@ contract Q34{
     Student[] students;
     
     function getAvg() public view returns(uint){
+        require(students.length>0,"Nope");
         uint sum;
         for(uint i=0;i<students.length;i++){
             sum+=students[i].score;
@@ -195,6 +196,6 @@ contract Q40{
         }
 
         if(temp.length%2==0) return (temp,temp[temp.length/2-1],temp[temp.length/2]);
-        else return (temp,temp[temp.length/2],0);
+        else return (temp,temp[temp.length/2],);
     } 
 }
