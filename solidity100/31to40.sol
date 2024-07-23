@@ -119,16 +119,16 @@ contract Q37{
         owner = payable(msg.sender);
     }
 
-    function donateWei() public {
-        payable(msg.sender).transfer(1 wei);
+    function donateWei() public payable  {
+        require(msg.value == 1 wei,"Give 1 wei");
     }
 
-    function donateFinney() public {
-        payable(msg.sender).transfer(0.001 ether);
+    function donateFinney() public payable {
+        require(msg.value == 0.001 ether,"Give 1 finney");
     }
 
-    function donateEther() public {
-        payable(msg.sender).transfer(1 ether);
+    function donateEther() public payable {
+        require(msg.value == 1 ether,"Give 1 ether");
     }
 
     function withdraw() public{
