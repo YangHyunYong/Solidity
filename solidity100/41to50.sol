@@ -141,15 +141,18 @@ contract Q49{
     긴 숫자를 넣었을 때, 마지막 3개의 숫자만 반환하는 함수를 구현하세요.
     예) 459273 → 273 // 492871 → 871 // 92218 → 218
     */
+    // function getLastThree(uint _n) public pure returns(uint){
+    //     uint idx=1;
+    //     uint num;
+    //     for(uint i=0;i<3;i++){
+    //         num+=_n%10 * idx;
+    //         idx*=10;
+    //         _n/=10;
+    //     }
+    //     return num;
+    // }
     function getLastThree(uint _n) public pure returns(uint){
-        uint idx=1;
-        uint num;
-        for(uint i=0;i<3;i++){
-            num+=_n%10 * idx;
-            idx*=10;
-            _n/=10;
-        }
-        return num;
+        return _n%1000;
     }
 }
 
