@@ -153,7 +153,7 @@ contract Q60{
     struct Room{
         address[] guests;
     }
-
+ 
     mapping(uint => Room[2]) reservations;
 
     function setReservation(uint _d, uint _r, address[] memory _guests) public {
