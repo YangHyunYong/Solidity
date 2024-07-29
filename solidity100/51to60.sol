@@ -151,12 +151,17 @@ contract Q60{
     힌트 : 날짜는 그냥 숫자로 기입하세요. 예) 2023년 5월 27일 → 230527
     */
     struct Room{
-        address[2] guests;
+        address[] guests;
     }
 
     mapping(uint => Room[2]) reservations;
 
-    function getReservation(uint _d, uint _r) public view returns(address[2] memory){
+    function setReservation(uint _d, uint _r, address[] memory _guests) public {
+        require(_r<2 && _guests.length<3,"Nope");
+        reservations[_d][_r].guests=_guests;
+    }
+
+    function getReservation(uint _d, uint _r) public view returns(address[] memory){
         return reservations[_d][_r].guests;
     }
 }
