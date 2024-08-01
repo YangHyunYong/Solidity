@@ -97,6 +97,10 @@ contract Q86{
     uint cons;
     mapping(address=>uint) balances;
 
+    function deposit() public payable{
+        balances[msg.sender]+=msg.value;
+    }
+
     function vote(bool _v) public {
         require(balances[msg.sender]>=1 ether,"Nope");
         _v ? pros++ : cons++;
@@ -172,6 +176,8 @@ contract Q90{
         return string(temp);
     }
     //bytes1 값이 아스키코드값을 벗어나면 어떻게 해야할까요?
+    //문제를 내신 의도가 어떤 건지 파악이 조금 어렵습니다..ㅜ
+
 }
 
    
