@@ -93,11 +93,14 @@ contract Q76{
     function convert(uint _n) public pure returns(string memory){
         uint n=_n;
         uint cnt;
+
         while(n>0){
             cnt++;
             n/=10;
         }
-        bytes memory temp =new bytes(cnt);
+         
+        if(_n==0) cnt=1;
+        bytes memory temp = new bytes(cnt);
         
         for(uint i=cnt;i>0;i--){
             temp[i-1]=bytes1(uint8(_n%10+48));
@@ -136,29 +139,32 @@ contract Q78{
         for(uint i=0;i<arr.length;i++){
             if(arr[i]>=10 && arr[i]<=25){
                 check=true;
+                break;
             }
         }
         return check;
     }
 }
 
-contract Q79_A{
-    /*
-    3개의 숫자를 넣으면 그 중에서 가장 큰 수를 찾아내주는 함수를 Contract A에 구현하세요. 
-    Contract B에서는 이름, 번호, 점수를 가진 구조체 학생을 구현하세요. 
-    학생의 정보를 3명 넣되 그 중에서 가장 높은 점수를 가진 학생을 반환하는 함수를 구현하세요. 
-    구현할 때는 Contract A를 import 하여 구현하세요.
-    */
-    function findMax(uint[] memory arr) public pure returns(uint){
-        uint max;
-        for(uint i=0;i<arr.length;i++){
-            if(max<arr[i]){
-                max=arr[i];
-            }
-        }
-        return max;
-    }
-}
+//둘이 다른 위치에 있다고 생각하고 import 하기
+// contract Q79_A{
+//     /*
+//     3개의 숫자를 넣으면 그 중에서 가장 큰 수를 찾아내주는 함수를 Contract A에 구현하세요. 
+//     Contract B에서는 이름, 번호, 점수를 가진 구조체 학생을 구현하세요. 
+//     학생의 정보를 3명 넣되 그 중에서 가장 높은 점수를 가진 학생을 반환하는 함수를 구현하세요. 
+//     구현할 때는 Contract A를 import 하여 구현하세요.
+//     */
+//     function findMax(uint[] memory arr) public pure returns(uint){
+//         uint max;
+//         for(uint i=0;i<arr.length;i++){
+//             if(max<arr[i]){
+//                 max=arr[i];
+//             }
+//         }
+//         return max;
+//     }
+// }
+import "./Q79_A.sol";
 contract Q79_B{
     struct Student{
         string name;
@@ -180,6 +186,7 @@ contract Q79_B{
     }
 }
 
+//들어온 순서는 그대로. 나가는 순서는 반대로 바꾸기
 contract Q80{
     /*
     지금은 동적 array에 값을 넣으면(push) 가장 앞부터 채워집니다. 1,2,3,4 순으로 넣으면 [1,2,3,4] 이렇게 표현됩니다. 
@@ -189,31 +196,49 @@ contract Q80{
     push와 pop을 이용하되 FIFO 방식으로 바꾸어 보세요.
     */
     uint[] arr;
-    function fifoPush(uint _n) public {
-        uint[] memory temp = new uint[](arr.length);
-        if(arr.length==0){
-            arr.push(_n);
-        }
-        else {
-            uint len=arr.length;
-            uint idx=0;
-            while(len>0){
-                temp[idx]=arr[arr.length-idx-1];
-                idx++;
-                len--;
-            }
-            delete arr;
 
-            arr.push(_n);
-            for(uint i=temp.length;i>0;i--){
-                arr.push(temp[i-1]);
-            }
-        }
+    function fifoPush(uint _n) public {
+        arr.push(_n);
     }
 
     function fifoPop() public{
-        arr.pop();
+        uint[] memory temp = new uint[](arr.length-1);
+        uint idx;
+        for(uint i=arr.length;i>1;i--){
+            temp[idx++]=arr[i-1];
+        }
+        delete arr;
+
+        for(uint i=temp.length;i>0;i--){
+            arr.push(temp[i-1]);
+        }
     }
+
+    // function fifoPush(uint _n) public {
+    //     uint[] memory temp = new uint[](arr.length);
+    //     if(arr.length==0){
+    //         arr.push(_n);
+    //     }
+    //     else {
+    //         uint len=arr.length;
+    //         uint idx=0;
+    //         while(len>0){
+    //             temp[idx]=arr[arr.length-idx-1];
+    //             idx++;
+    //             len--;
+    //         }
+    //         delete arr;
+
+    //         arr.push(_n);
+    //         for(uint i=temp.length;i>0;i--){
+    //             arr.push(temp[i-1]);
+    //         }
+    //     }
+    // }
+
+    // function fifoPop() public{
+    //     arr.pop();
+    // }
 
     function getArr() public view returns(uint[] memory){
         return arr;
