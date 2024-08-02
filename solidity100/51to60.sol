@@ -46,8 +46,9 @@ contract Q53{
         banks[_s][msg.sender]+=msg.value;
     }
 
-    function withdraw(string memory _s) public {
-        payable(msg.sender).transfer(banks[_s][msg.sender]);
+    function withdraw(string memory _s, uint _n) public {
+        banks[_s][msg.sender]-=_n;
+        payable(msg.sender).transfer(_n);
     }
 }
 
