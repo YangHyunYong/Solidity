@@ -120,7 +120,6 @@ contract Q67_A{
     function getBalance() public view returns(uint){
         return address(this).balance;
     }
-
 }
 contract Q67_B{
     function sendEther(address _addr) public payable{

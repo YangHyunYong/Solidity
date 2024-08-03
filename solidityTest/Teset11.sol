@@ -38,16 +38,17 @@ contract Test11{
 
         string[6] memory temp;
         string memory select;
+        uint[6] memory idxList;
+        uint idx;
         for(uint i=0;i<6;i++){
             if(i<4){
-                select=getRandom(numbers);
+                idx= uint(keccak256(abi.encodePacked(block.timestamp,block.prevrandao))) % numbers.length;
             }
             else{
-                select=getRandom(alpha);
+                idx= uint(keccak256(abi.encodePacked(block.timestamp,block.prevrandao))) % alpha.length;
             }
             temp[i]=select;
         }
-
         lottos[msg.sender]=temp;
     }
 

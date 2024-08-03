@@ -196,6 +196,6 @@ contract Q40{
         }
 
         if(temp.length%2==0) return (temp,temp[temp.length/2-1],temp[temp.length/2]);
-        else return (temp,temp[temp.length/2],);
+        else return (temp,temp[temp.length/2],0);
     } 
 }

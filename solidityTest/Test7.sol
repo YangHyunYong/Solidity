@@ -1,6 +1,60 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
+contract Test7_s{
+    enum CarStatus{
+        stop,
+        off,
+        driving
+    }
+
+    struct Car{
+        uint speed;
+        uint gas;
+        CarStatus status;
+    }
+
+    Car public myCar;
+
+    function accel() public{
+        require(myCar.speed<70 && myCar.gas>30 && (myCar.status==CarStatus.driving || myCar.status==CarStatus.stop),"Nope");
+        myCar.speed+=10;
+        myCar.gas-=20;
+        if(myCar.status != CarStatus.driving) myCar.status=CarStatus.driving;
+    }
+
+    function Break() public{
+        require(myCar.speed>0 && myCar.gas>=10,"Nope");
+        myCar.speed-=10;
+        myCar.gas-=10;
+        if(myCar.speed==0) myCar.status=CarStatus.stop;
+    }
+
+    function turnOn() public{
+        require(myCar.status == CarStatus.off,"Nope");
+        myCar.status=CarStatus.stop;
+    }
+
+    function turnOff() public{
+        require(myCar.status == CarStatus.stop,"Nope");
+        myCar.status = CarStatus.off;
+    }
+
+    function charge() public payable {
+        require((msg.value == 1 ether || address(this).balance >=1 ether) && myCar.status == CarStatus.off,"Nope");
+        myCar.gas=100;
+        payable(address(0x0)).transfer(1 ether);    //burn
+        // (bool success, )=address(0).call{value: 1 ether}(""); //burn call버전
+        // require(success);
+    }
+
+    receive() external payable { }
+    // function pre() public payable{
+        //오토모빌 관련해서 컨트랙트를 어떻게 합칠수있을까에 대한 아이디어 -> 각 차가 스마트컨트랙트를 한개씩 보유하고 있다 -> 운전습관, 현재 속도 규칙을 지키느냐를 로그로 기록해서 보험회사랑 연동해서 자동으로 안전운전점수 및 보험점수 평가까지 고려했었다
+        //오라클 문제가 너무 심했고, 차가 달리는 속도를 어떻게 기록할까도 힘들었다
+    // }
+}
+
 contract Test7{
     /*
     * 악셀 기능 - 속도를 10 올리는 기능, 악셀 기능을 이용할 때마다 연료가 20씩 줄어듬, 연료가 30이하면 더 이상 악셀을 이용할 수 없음, 속도가 70이상이면 악셀 기능은 더이상 못씀

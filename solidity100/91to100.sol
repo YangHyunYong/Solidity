@@ -186,46 +186,25 @@ contract Q98 {
 
 contract Q99 {
     /*
-    inline - 4개의 숫자를 받아서 가장 큰수와 작은 수를 반환하는 함수를 구현하세요.
+    inline - bytes4형 b의 값을 정하는 함수 setB를 구현하세요.
     */
-    function getMaxMin(uint[4] memory arr) public pure returns(uint _max, uint _min){
-        assembly{
-            _max := 0
-            _min := sub(exp(2,256),1)
-
-            for {let i:=0} lt(i,4) {i:=add(i,1)} {
-                let num := mload(add(arr,mul(0x20,i)))
-
-                if lt(_max,num){
-                    _max := num
-                }
-                if gt(_min,num){
-                    _min := num
-                }
-            }
+    bytes4 public b;
+    function setB(bytes4 _b) public {
+        assembly {
+            sstore(b.slot, shr(224, _b))
         }
     }
 }
 
 contract Q100 {
     /*
-    inline - 4개의 숫자를 받아서 가장 큰수와 작은 수를 반환하는 함수를 구현하세요.
+    inline - bytes형 변수 b의 값을 정하는 함수 setB를 구현하세요.
     */
-    function getMaxMin(uint[4] memory arr) public pure returns(uint _max, uint _min){
-        assembly{
-            _max := 0
-            _min := sub(exp(2,256),1)
-
-            for {let i:=0} lt(i,4) {i:=add(i,1)} {
-                let num := mload(add(arr,mul(0x20,i)))
-
-                if lt(_max,num){
-                    _max := num
-                }
-                if gt(_min,num){
-                    _min := num
-                }
-            }
-        }
-    }
+    // bytes public b;
+    // function setB(bytes memory _b) public {
+    //     assembly{
+    //         let len := mload(_b)
+            
+    //     }
+    // }
 }
